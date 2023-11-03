@@ -3,7 +3,7 @@ const { model, Schema } = require ('mongoose');
 const usuarioSchema = new Schema({
     nombre: String,
     email: String,
-    contraseña: String,
+    password: String,
     rol: {
       type:String,
       default: 'regular'

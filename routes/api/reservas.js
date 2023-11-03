@@ -26,7 +26,7 @@ router.get('/:Id', async (req, res)=>{
 
 router.post('/', async (req, res) => {
     try {
-      const { fecha, hora, tipoServicio, numPer } = req.body;
+      const { fecha, hora, numPer } = req.body;
   
       // Consulta todas las reservas existentes para la combinación de fecha, horario y tipo de servicio
       const reservasParaComb = await Reserva.find({ fecha, hora});
@@ -40,7 +40,7 @@ router.post('/', async (req, res) => {
   
         res.json({ mensaje: 'Reserva exitosa' });
       } else {
-        res.status(409).json({ mensaje: 'El aforo máximo ha sido alcanzado para esta combinación' });
+        res.json({ mensaje: 'El aforo máximo ha sido alcanzado para esta combinación' });
       }
     } catch (error) {
       res.json({ error: error.message });
