@@ -68,6 +68,41 @@ exports.loginUsuario = async (req, res) => {
   }
 };
 
+exports.updateUsuario= async (req, res) => {
+  try {
+    const { usuarioId } = req.params;
+    const updatedUsuario = await Usuario.findByIdAndUpdate(
+      usuarioId,
+      req.body,
+      { new: true } // Para devolver el documento actualizado
+    );
+
+    if (!updatedUsuario) {
+      return res.json({ error: 'No se encontró el usuario para editar' });
+    }
+
+    res.json(updatedUsuario);
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+};
+
+exports.deleteUsuarioById = async (req, res) => {
+  try {
+    const { usuarioId } = req.params;
+    const deletedUsuario = await Usuario.findByIdAndDelete(usuarioId);
+
+    if (!deletedUsuario) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+    }
+
+    res.json({ mensaje: 'Usuario eliminado exitosamente' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 function createToken(usuario) {
   const payload = {
     id: usuario._id,

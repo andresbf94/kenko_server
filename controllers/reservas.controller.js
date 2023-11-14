@@ -45,3 +45,41 @@ exports.createReserva = async (req, res) => {
     res.json({ error: error.message });
   }
 };
+
+// Controlador para actualizar una reserva
+exports.updateReserva = async (req, res) => {
+  try {
+    const { reservaId } = req.params;
+    const updatedReserva = await Reserva.findByIdAndUpdate(
+      reservaId,
+      {
+        $set: req.body, // Usa $set para actualizar los campos especificados en req.body
+      },
+      { new: true }
+    );
+
+    if (!updatedReserva) {
+      return res.status(404).json({ mensaje: 'Reserva no encontrada' });
+    }
+
+    res.json(updatedReserva);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Controlador para eliminar una reserva
+exports.deleteReservaById = async (req, res) => {
+  try {
+    const { reservaId } = req.params;
+    const deletedReserva = await Reserva.findByIdAndDelete(reservaId);
+
+    if (!deletedReserva) {
+      return res.status(404).json({ mensaje: 'Reserva no encontrada' });
+    }
+
+    res.json({ mensaje: 'Reserva eliminada exitosamente' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

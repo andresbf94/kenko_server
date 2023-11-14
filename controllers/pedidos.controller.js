@@ -24,12 +24,42 @@ exports.getPedidoById = async (req, res) => {
 
 // Controlador para crear un nuevo pedido
 exports.createPedido = async (req, res) => {
-  try {
-    
+  try {    
     const pedido = await Pedido.create(req.body);
-
     res.json(pedido);
   } catch (error) {
     res.json({ error: error.message });
   }
 };
+
+// Controlador para modificar un pedido
+exports.updatePedido = async (req, res) => {
+  try {
+    const { pedidoId } = req.params;
+    const updatePedido = await Pedido.findByIdAndUpdate(
+      pedidoId,
+      { $set: req.body },
+      { new: true }
+    );
+  if(!updatePedido){
+    return res.status(404).json({ message: 'Pedido no encontrado'});
+  }
+  res.json(updatePedido);
+  } catch (error) {
+    res.json({ error: error.message});
+  }
+}
+
+// Controlador para eliminar pedidos
+exports.deletePedidoById = async (req, res) =>{
+  try {
+    const { pedidoId } = req.params;
+    const pedido = await Pedido.findByIdAndDelete(pedidoId);
+    if(!pedido){
+      return res.json({ message: 'Pedido no encontrado' })
+    }
+    res.json(pedido);   
+  } catch (error) {
+    res.json({ error: error.message})
+  }
+}

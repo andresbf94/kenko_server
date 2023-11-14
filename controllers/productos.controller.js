@@ -31,3 +31,34 @@ exports.createProducto = async (req, res) => {
     res.json({ error: error.message });
   }
 };
+
+// Controlador para modificar un producto
+exports.updateProducto = async (req, res) => {
+  try {
+    const { productoId } = req.params;
+    const updatedProducto = await Producto.findByIdAndUpdate(
+      productoId,
+      { $set: req.body },  // Utiliza $set para actualizar los campos especificados en req.body
+      { new: true }
+    );
+
+    if (!updatedProducto) {
+      return res.status(404).json({ mensaje: 'Producto no encontrado' });
+    }
+
+    res.json(updatedProducto);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Controlador para eliminar un producto
+exports.deleteProductoById = async (req, res) =>{
+  try {
+    const { productoId } = req.params;
+    const producto = await Producto.findByIdAndDelete(productoId);
+    res.json(producto);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
