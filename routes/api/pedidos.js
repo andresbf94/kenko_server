@@ -9,4 +9,4 @@ router.post('/', pedidoController.createPedido);
 router.put('/:pedidoId', checkToken,  pedidoController.updatePedido);
 router.delete('/:pedidoId', pedidoController.deletePedidoById)
 
-module.exports = router;
+module.exports = router; 

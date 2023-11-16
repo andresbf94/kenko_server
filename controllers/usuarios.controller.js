@@ -68,6 +68,7 @@ exports.loginUsuario = async (req, res) => {
   }
 };
 
+// Controlador para editar usuarios
 exports.updateUsuario= async (req, res) => {
   try {
     const { usuarioId } = req.params;
@@ -87,6 +88,7 @@ exports.updateUsuario= async (req, res) => {
   }
 };
 
+// Contolador para eliminar usuarios
 exports.deleteUsuarioById = async (req, res) => {
   try {
     const { usuarioId } = req.params;
@@ -101,7 +103,6 @@ exports.deleteUsuarioById = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 function createToken(usuario) {
   const payload = {
