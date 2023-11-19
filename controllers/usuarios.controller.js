@@ -42,7 +42,12 @@ exports.registerUsuario = async (req, res) => {
   try {
     req.body.password = bcrypt.hashSync(req.body.password, 10);
     const usuario = await Usuario.create(req.body);
-    res.json(usuario);
+    res.json({
+      success: 'Usuario creado',
+      token: createToken(usuario),
+      id: usuario._id,
+      rol: usuario.rol,
+    });
   } catch (error) {
     res.json({ error: error.message });
   }

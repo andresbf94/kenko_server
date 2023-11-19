@@ -2,12 +2,12 @@ const { model, Schema } = require ('mongoose');
 
 const pedidoSchema = new Schema({
 
-  users_id: { 
+  user_id: { 
     type: Schema.Types.ObjectId, 
     ref: 'Usuario', 
     required:true 
   },
-  direccionEntrega: {
+  direccion: {
     type: String,
     required:true
   },

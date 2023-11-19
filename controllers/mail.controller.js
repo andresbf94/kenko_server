@@ -30,11 +30,8 @@ exports.sendEmail = async (req, res) => {
         
                 <div class="row">
                     <p>Estimado/a <b>${nombre}</b>,</p>
-                    <p>
-                        Es un placer confirmar su reserva en Kenkö para el ${fecha}.Usamos la clase carbon para darle nuestro formato de fecha --> 
-                        Estamos emocionados de darle la bienvenida a nuestro restaurante y esperamos brindarle una experiencia culinaria excepcional.<br>
-                        A continuación, se detallan los datos de su reserva:
-                    </p>
+                    <p>Es un placer confirmar su reserva en Kenkö para el ${fecha}.</p>
+                    <p>A continuación, se detallan los datos de su reserva:</p>  
                     <p>
                         <b>Nombre de la Reserva:</b> ${nombre}<br>
                         <b>Fecha:</b> ${fecha}<br>
@@ -45,7 +42,7 @@ exports.sendEmail = async (req, res) => {
                     <p>
                         Nuestro equipo está comprometido en proporcionarle un servicio de alta calidad y una deliciosa comida. 
                         Si necesita hacer alguna modificación en su reserva o tiene alguna pregunta adicional, 
-                        no dude en ponerse en contacto con nosotros al 000 000 000 o responder a este correo electrónico.
+                        no dude en ponerse en contacto con nosotros al 985 06 20 18 o responder a este correo electrónico.
                     </p>
                     <p>
                         Esperamos recibirle pronto y asegurarnos de que disfrute de su experiencia en Kenkö.<br>
@@ -77,10 +74,9 @@ exports.sendEmail = async (req, res) => {
         }
 
         const info = await transporter.sendMail(mailOptions); // Corregir el nombre de la función a sendMail
-        res.status(200).send('Correo enviado: ' + info.response);
+        res.json('Correo enviado: ' + info.response);
     } catch (error) {
-        console.error(error);
-        res.status(500).send(error.toString());
+        res.json({error: error.message})
     }
   }
   
