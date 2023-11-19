@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const pedidoController = require('../../controllers/pedidos.controller');
-const { checkToken } = require('../../utils/middlewares');
+const { checkToken } = require('../../middleware/userAuth');
 
 // Rutas para gestionar pedidos
 router.get('/', pedidoController.getAllPedidos);

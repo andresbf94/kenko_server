@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const productoController = require('../../controllers/productos.controller');
-const { checkToken } = require('../../utils/middlewares');
+const { checkToken } = require('../../middleware/userAuth');
 
 // Rutas para gestionar productos
 router.get('/', productoController.getAllProductos);

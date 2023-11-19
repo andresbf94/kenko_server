@@ -13,6 +13,14 @@ const usuarioSchema = new Schema({
     type: String,
     required: true
   },
+  direccion: {
+    type: String,
+    required:true
+  },
+  telefono: {
+    type: Number,
+    required: true
+  },
   rol: {
     type: String,
     default: 'regular',

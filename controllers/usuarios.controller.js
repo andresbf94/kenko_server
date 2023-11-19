@@ -17,6 +17,12 @@ exports.getAllUsuarios = async (req, res) => {
 exports.getUsuarioById = async (req, res) => {
   try {
     const { usuarioId } = req.params;
+    
+    // Verifica que el usuario autenticado sea el propietario de la cuenta o tenga permisos adecuados
+    if (req.userId !== usuarioId) {
+      return res.json({ error: 'No tienes permisos para acceder a este usuario' });
+    }
+
     const usuario = await Usuario.findById(usuarioId);
     res.json(usuario);
   } catch (error) {
@@ -69,9 +75,16 @@ exports.loginUsuario = async (req, res) => {
 };
 
 // Controlador para editar usuarios
-exports.updateUsuario= async (req, res) => {
+exports.updateUsuario = async (req, res) => {
   try {
     const { usuarioId } = req.params;
+    console.log('req.userId:', req.userId);
+    console.log('usuarioId:', usuarioId);
+    // Verifica que el usuario autenticado sea el propietario de la cuenta o tenga permisos adecuados
+    if (req.userId !== usuarioId) {
+      return res.json({ error: 'No tienes permisos para editar este usuario' });
+    }
+
     const updatedUsuario = await Usuario.findByIdAndUpdate(
       usuarioId,
       req.body,
@@ -87,6 +100,7 @@ exports.updateUsuario= async (req, res) => {
     res.json({ error: error.message });
   }
 };
+
 
 // Contolador para eliminar usuarios
 exports.deleteUsuarioById = async (req, res) => {
@@ -109,5 +123,5 @@ function createToken(usuario) {
     id: usuario._id,
     rol: usuario.rol,
   };
-  return jwt.sign(payload, 'token');
+  return jwt.sign(payload, 'token', { expiresIn: '30m'});
 }
