@@ -11,12 +11,23 @@ exports.getAllPedidos = async (req, res) => {
   }
 };
 
-// Controlador para obtener un pedido por ID
+// Controlador para obtener un pedido por su ID
 exports.getPedidoById = async (req, res) => {
   try {
     const { pedidoId } = req.params;
     const pedido = await Pedido.findById(pedidoId);
     res.json(pedido);
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+};
+
+// Controlador para obtener un pedido por el id de un usuario
+exports.getPedidosByUserId = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const pedidos = await Pedido.find({ user_id: userId });
+    res.json(pedidos);
   } catch (error) {
     res.json({ error: error.message });
   }
