@@ -4,7 +4,7 @@ const { checkToken } = require('../../middleware/userAuth');
 
 // Rutas para gestionar pedidos
 router.get('/', pedidoController.getAllPedidos);
-router.get('/:userId', pedidoController.getPedidosByUserId); // Mueve esta línea arriba
+router.get('/usuario/:id', pedidoController.getPedidosByUserId); // Mueve esta línea arriba
 router.get('/:pedidoId', pedidoController.getPedidoById);
 router.post('/', pedidoController.createPedido);
 router.put('/:pedidoId', checkToken, pedidoController.updatePedido);

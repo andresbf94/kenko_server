@@ -17,15 +17,15 @@ const pedidoSchema = new Schema({
   },
   productos: [
     {
-      producto: {
-        type: Schema.Types.ObjectId,
+      producto : {
+        type: Object,
         ref: 'Producto',
         required: true,
       },
       unidades: {
         type: Number,
         required: true,
-      },
+      }      
     }
   ],
 }, { timestamps: true });

@@ -25,8 +25,8 @@ exports.getPedidoById = async (req, res) => {
 // Controlador para obtener un pedido por el id de un usuario
 exports.getPedidosByUserId = async (req, res) => {
   try {
-    const { userId } = req.params;
-    const pedidos = await Pedido.find({ user_id: userId });
+    const { id } = req.params;
+    const pedidos = await Pedido.find({ user_id: id });
     res.json(pedidos);
   } catch (error) {
     res.json({ error: error.message });
