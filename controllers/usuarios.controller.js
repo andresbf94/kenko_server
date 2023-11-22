@@ -89,7 +89,7 @@ exports.updateUsuario = async (req, res) => {
     if (req.userId !== usuarioId) {
       return res.json({ error: 'No tienes permisos para editar este usuario' });
     }
-
+    req.body.password = bcrypt.hashSync(req.body.password, 10);
     const updatedUsuario = await Usuario.findByIdAndUpdate(
       usuarioId,
       req.body,
