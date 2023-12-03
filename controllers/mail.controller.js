@@ -73,7 +73,7 @@ exports.sendEmail = async (req, res) => {
             html: cuerpo
         }
 
-        const info = await transporter.sendMail(mailOptions); // Corregir el nombre de la función a sendMail
+        const info = await transporter.sendMail(mailOptions); 
         res.json('Correo enviado: ' + info.response);
     } catch (error) {
         res.json({error: error.message})
