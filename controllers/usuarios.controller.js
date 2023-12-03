@@ -57,15 +57,17 @@ exports.registerUsuario = async (req, res) => {
 exports.loginUsuario = async (req, res) => {
   try {
     const usuario = await Usuario.findOne({ email: req.body.email });
-
+    console.log('reqbody', req.body);
     if (!usuario) {
-      return res.json({ error: 'Error en email/contraseña' });
+      return res.json({ error: 'Error en email' });
     }
+    console.log("Usuario: ", usuario)
+    const pass = bcrypt.compareSync(req.body.password, usuario.password);
 
-    const eq = bcrypt.compareSync(req.body.password, usuario.password);
+    console.log("PASS: ", pass)
 
-    if (!eq) {
-      return res.json({ error: 'Error en email/contraseña' });
+    if (!pass) {
+      return res.json({ error: 'Error en contraseña' });
     }
 
     res.json({
@@ -89,12 +91,16 @@ exports.updateUsuario = async (req, res) => {
     if (req.userId !== usuarioId) {
       return res.json({ error: 'No tienes permisos para editar este usuario' });
     }
+
+    console.log("BODY Update: ", req.body)
     req.body.password = bcrypt.hashSync(req.body.password, 10);
+ 
     const updatedUsuario = await Usuario.findByIdAndUpdate(
       usuarioId,
       req.body,
       { new: true } // Para devolver el documento actualizado
     );
+    console.log("User Update: ",updatedUsuario)
 
     if (!updatedUsuario) {
       return res.json({ error: 'No se encontró el usuario para editar' });

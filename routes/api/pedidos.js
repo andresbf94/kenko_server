@@ -7,7 +7,7 @@ router.get('/', pedidoController.getAllPedidos);
 router.get('/usuario/:id', pedidoController.getPedidosByUserId); // Mueve esta línea arriba
 router.get('/:pedidoId', pedidoController.getPedidoById);
 router.post('/', pedidoController.createPedido);
-router.put('/:pedidoId', checkToken, pedidoController.updatePedido);
+router.put('/:pedidoId', pedidoController.updatePedido);
 router.delete('/:pedidoId', pedidoController.deletePedidoById);
 
 module.exports = router; 
