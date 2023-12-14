@@ -20,8 +20,8 @@ exports.createSession = async (req, res) => {
                 },
             ],
             mode: 'payment',
-            success_url: 'http://localhost:4200/carrito',
-            cancel_url: 'http://localhost:4200/',
+            success_url: 'https://kenko-front.onrender.com/',
+            cancel_url: 'https://kenko-front.onrender.com/',
         });
 
         return res.json(session.url);
