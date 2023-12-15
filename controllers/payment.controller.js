@@ -34,6 +34,7 @@ exports.createSession = async (req, res) => {
 
 exports.verifyPayment = (req, res) => {
    
+
     let event = req.body;
     // Manejar el evento
     switch (event.type) {
