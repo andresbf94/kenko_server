@@ -6,6 +6,7 @@ require('./config/db');                             // Conexion a la base de dat
 const app = express();                              // Crea el servidor
 
 app.use(cors());                                    // Condigura el Middleware CORS en la aplicación, permitiendo solicitudes de cualquier origen
+app.use(bodyParser.raw({ type: 'application/json' }));                                  
 app.use(express.json());                            // Configuracion para poder recivir archivos json y tratarlos como objetos
 app.use(express.urlencoded({extended: false}));     // Configura el middleware para analizar los cuerpos de las solicitudes codificados en URL
 app.use('/uploads', express.static('uploads'));     // Configura la ruta /uploads para servir archivos estaticos desde el dirctorio "uploads"
