@@ -1,20 +1,21 @@
 const Stripe = require ('stripe');
 const stripe = new Stripe ('sk_test_51OK3b8JXBoxz3xyVMtot2l410OkNjKkfbzdMvxwSyNryUEDAhto2R1BOlUKwG1gnxQcUq1cE73h8wwpfQMwbHy8j00b5OTeXQl')
+const endpointSecret = "whsec_iS5ivM1F2sY4YIYhdr6riBIY8Hk7HJ1G";
 
 exports.createSession = async (req, res) => {
     try {
-        const { totalAmount } = req.body; // Suponiendo que envías el monto total desde el cliente
+        const { totalAmount } = req.body; 
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [
                 {
                     price_data: {
-                        currency: 'eur', // Cambia a tu moneda local si es diferente
+                        currency: 'eur', 
                         product_data: {
-                            name: 'Importe total del pedido', // Cambia al nombre de tu producto
+                            name: 'Importe total del pedido',
                         },
-                        unit_amount: totalAmount * 100, // Convierte a euros, ya que la cifra tiene en cuenta los centimos
+                        unit_amount: totalAmount * 100, 
                     },
                     quantity: 1,
                 },
@@ -30,3 +31,29 @@ exports.createSession = async (req, res) => {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+exports.verifyPayment = (req, res) => {
+    const sig = req.headers['stripe-signature'];
+  
+    let event;
+  
+    try {
+      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    } catch (err) {
+      res.status(400).send(`Webhook Error: ${err.message}`);
+      return;
+    }
+  
+    // Manejar el evento
+    switch (event.type) {
+      case 'payment_intent.succeeded':
+        const paymentIntentSucceeded = event.data.object;
+        console.log('pago realizado hostiaaaaa');
+        break;
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+  
+    // Devolver una respuesta 200 para confirmar la recepción del evento
+    res.send();
+  };
