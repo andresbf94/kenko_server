@@ -38,6 +38,7 @@ exports.verifyPayment = (req, res) => {
     let event;
   
     try {
+        console.log(req.body)
       event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
     } catch (err) {
       res.status(400).send(`Webhook Error: ${err.message}`);

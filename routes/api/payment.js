@@ -3,6 +3,6 @@ const paymentController = require('./../../controllers/payment.controller');
 const express = require('express');
 
 router.post('/', paymentController.createSession);
-router.post('/webhook', express.raw({ type: 'application/json' }), paymentController.verifyPayment);
+router.post('/webhook', (req, res) => paymentController.verifyPayment(req, res));
 
 module.exports = router;
