@@ -33,19 +33,28 @@ exports.createSession = async (req, res) => {
 };
 
 exports.verifyPayment = (req, res) => {
-   
-
-    let event = req.body;
+    const sig = req.headers['stripe-signature'];
+  
+    let event;
+  
+    try {
+      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    } catch (err) {
+      res.status(400).send(`Webhook Error: ${err.message}`);
+      return;
+    }
+  
     // Manejar el evento
     switch (event.type) {
       case 'payment_intent.succeeded':
         const paymentIntentSucceeded = event.data.object;
-        console.log(paymentIntentSucceeded);
+        console.log('pago realizado hostiaaaaa')
         break;
+      // ... manejar otros tipos de eventos
       default:
         console.log(`Unhandled event type ${event.type}`);
     }
   
     // Devolver una respuesta 200 para confirmar la recepción del evento
-    res.json({received: true});
+    res.send();
   };
