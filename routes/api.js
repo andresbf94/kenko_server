@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const mailController = require('../controllers/mail.controller')
 
-
 router.use('/productos', require('./api/productos')); 
 router.use('/pedidos', require('./api/pedidos')); 
 router.use('/usuarios', require('./api/usuarios')); 
