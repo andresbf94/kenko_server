@@ -1,4 +1,5 @@
 const express = require('express');                 // Importa la biblioteca de Express
+const bodyParser = require('body-parser');
 const cors = require('cors');                       // Importa la biblioteca CORS
 require('dotenv').config();                         // Importa y configura la biblioteca dotenv para cargar las variables de entorno
 require('./config/db');                             // Conexion a la base de datos
