@@ -4,25 +4,20 @@ const endpointSecret = "whsec_iS5ivM1F2sY4YIYhdr6riBIY8Hk7HJ1G";
 
 exports.createSession = async (req, res) => {
     try {
-        const { totalAmount } = req.body; 
+        const productos = req.body.productos;
+        const items = productos.map(producto => ({
+            
+            price: producto.producto.precioStripe,
+            quantity: producto.unidades,
+        })) 
+        console.log("HHHHHHHHHHHH", items);
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
-            line_items: [
-                {
-                    price_data: {
-                        currency: 'eur', 
-                        product_data: {
-                            name: 'Importe total del pedido',
-                        },
-                        unit_amount: totalAmount * 100, 
-                    },
-                    quantity: 1,
-                },
-            ],
+            line_items: items,
             mode: 'payment',
-            success_url: 'https://kenko-front.onrender.com/',
-            cancel_url: 'https://kenko-front.onrender.com/',
+            success_url: 'https://kenko-front-zzkv.onrender.com',
+            cancel_url: 'https://kenko-front-zzkv.onrender.com',
         });
 
         return res.json(session.url);
@@ -49,7 +44,7 @@ exports.verifyPayment = (req, res) => {
     switch (event.type) {
       case 'payment_intent.succeeded':
         const paymentIntentSucceeded = event.data.object;
-        console.log('pago realizado hostiaaaaa')
+        console.log('pago realizado')
         break;
       // ... manejar otros tipos de eventos
       default:
