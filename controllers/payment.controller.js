@@ -10,17 +10,16 @@ exports.createSession = async (req, res) => {
             price: producto.producto.precioStripe,
             quantity: producto.unidades,
         })) 
-        console.log("HHHHHHHHHHHH", items);
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: items,
             mode: 'payment',
-            success_url: 'https://kenko-front-zzkv.onrender.com',
+            success_url: 'http://localhost:4200/pedido-realizado',
             cancel_url: 'https://kenko-front-zzkv.onrender.com',
         });
-
         return res.json(session.url);
+
     } catch (error) {
         console.error('Error creating checkout session:', error);
         return res.status(500).json({ error: 'Internal Server Error' });
@@ -28,13 +27,13 @@ exports.createSession = async (req, res) => {
 };
 
 exports.verifyPayment = (req, res) => {
-    const sig = req.headers['stripe-signature'];
+    const signature = req.headers['stripe-signature'];
   
-    let event;
+    let event = req.body;
   
     try {
         console.log(req.body)
-      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+      event = stripe.webhooks.constructEvent(req.body, signature, endpointSecret);
     } catch (err) {
       res.status(400).send(`Webhook Error: ${err.message}`);
       return;
