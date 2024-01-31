@@ -6,7 +6,7 @@ const transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     user: 'kenkoasianfood@gmail.com',
-    pass: 'xfne wkvt ztat zkpn'
+    pass: process.env.KENKO_EMAIL_PASSWORD
   }
 });
 
