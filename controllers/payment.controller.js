@@ -17,7 +17,7 @@ exports.createSession = async (req, res) => {
             payment_method_types: ['card'],
             line_items: items,
             mode: 'payment',
-            success_url: 'http://localhost:4200/pedido-realizado',
+            success_url: 'https://kenko-front-zzkv.onrender.com/pedido-realizado',
             cancel_url: 'https://kenko-front-zzkv.onrender.com',
         });
         return res.json(session.url);
